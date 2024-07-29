@@ -31,7 +31,7 @@ def stemming(content):
     return content
 
 # Streamlit UI
-st.title('Fake News Detection')
+st.title('Fake News Detection-Siri Ravali')
 st.write('Enter the text of the news article below:')
 
 user_input = st.text_area("News Article Text")
