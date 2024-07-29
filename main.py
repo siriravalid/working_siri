@@ -1,5 +1,8 @@
 import streamlit as st
 import pickle
+import nltk
+nltk.download('stopwords')
+
 
 # Load the model and vectorizer
 with open('fake_news_model.sav', 'rb') as model_file:
