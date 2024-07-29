@@ -1,8 +1,10 @@
 import streamlit as st
 import pickle
+import os
 import nltk
-nltk.download('stopwords')
 
+# Set the NLTK data path to the directory where you included it
+nltk.data.path.append(os.path.join(os.getcwd(), 'nltk_data'))
 
 # Load the model and vectorizer
 with open('fake_news_model.sav', 'rb') as model_file:
