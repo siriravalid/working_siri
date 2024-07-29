@@ -1,10 +1,11 @@
 import streamlit as st
 import pickle
-import nltk
 import os
+import nltk
 
-# Ensure stopwords are downloaded
-nltk.download('stopwords', download_dir=os.path.join(os.getcwd(), 'nltk_data'))
+# Set the NLTK data path
+nltk_data_path = os.path.join(os.getcwd(), 'nltk_data')
+nltk.data.path.append(nltk_data_path)
 
 # Load the model and vectorizer
 with open('fake_news_model.sav', 'rb') as model_file:
@@ -19,10 +20,8 @@ def stemming(content):
     from nltk.corpus import stopwords
     from nltk.stem.porter import PorterStemmer
 
-    # Load stopwords from the downloaded directory
-    stop_words = set(stopwords.words('english'))
-
     port_stem = PorterStemmer()
+    stop_words = set(stopwords.words('english'))
 
     content = re.sub('[^a-zA-Z]', ' ', content)
     content = content.lower()
@@ -39,16 +38,19 @@ user_input = st.text_area("News Article Text")
 
 if st.button('Predict'):
     if user_input:
-        # Pre-process the text
-        processed_text = stemming(user_input)
-        
-        # Convert the text to numerical data
-        text_vector = vectorizer.transform([processed_text])
-        
-        # Make the prediction
-        prediction = model.predict(text_vector)
-        result = 'Real' if prediction[0] == 0 else 'Fake'
-        
-        st.write(f'The news is: {result}')
+        try:
+            # Pre-process the text
+            processed_text = stemming(user_input)
+            
+            # Convert the text to numerical data
+            text_vector = vectorizer.transform([processed_text])
+            
+            # Make the prediction
+            prediction = model.predict(text_vector)
+            result = 'Real' if prediction[0] == 0 else 'Fake'
+            
+            st.write(f'The news is: {result}')
+        except Exception as e:
+            st.write(f'Error: {e}')
     else:
         st.write('Please enter some text to classify.')
