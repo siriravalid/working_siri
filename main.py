@@ -2,7 +2,7 @@ import streamlit as st
 import pickle
 
 # Load the model and vectorizer
-with open('model.sav', 'rb') as model_file:
+with open('fake_news_model.sav', 'rb') as model_file:
     model = pickle.load(model_file)
 
 with open('vectorizer.sav', 'rb') as vectorizer_file:
