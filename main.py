@@ -1,10 +1,10 @@
 import streamlit as st
 import pickle
-import os
 import nltk
+import os
 
-# Set the NLTK data path to the directory where you included it
-nltk.data.path.append(os.path.join(os.getcwd(), 'nltk_data'))
+# Ensure stopwords are downloaded
+nltk.download('stopwords', download_dir=os.path.join(os.getcwd(), 'nltk_data'))
 
 # Load the model and vectorizer
 with open('fake_news_model.sav', 'rb') as model_file:
@@ -19,8 +19,10 @@ def stemming(content):
     from nltk.corpus import stopwords
     from nltk.stem.porter import PorterStemmer
 
-    port_stem = PorterStemmer()
+    # Load stopwords from the downloaded directory
     stop_words = set(stopwords.words('english'))
+
+    port_stem = PorterStemmer()
 
     content = re.sub('[^a-zA-Z]', ' ', content)
     content = content.lower()
